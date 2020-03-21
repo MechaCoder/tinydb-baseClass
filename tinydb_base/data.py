@@ -51,7 +51,7 @@ class DatabaseBase:
             goodrows.append(row)
 
         db = self.createObj()
-        newIds = db.tbl.insert_multiple(rows)
+        newIds = db.tbl.insert_multiple(goodrows)
         db.close()
         return newIds
 
