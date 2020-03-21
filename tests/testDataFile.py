@@ -2,6 +2,7 @@ from unittest import TestCase
 
 from tinydb import TinyDB
 
+
 class TestDataFile(TestCase):
 
     def testOne(self):

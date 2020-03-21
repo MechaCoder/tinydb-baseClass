@@ -3,6 +3,7 @@ from tinydb import Query
 from .factory import Factory
 from .exceptions import RowNotFound_Exception
 
+
 class GetSet:
 
     def __init__(self, file: str = 'ds.json', table: str = __name__):
@@ -11,7 +12,7 @@ class GetSet:
         self.fileName = file
         self.tableName = table
 
-    def set(self, tag:str, value:str):
+    def set(self, tag: str, value: str):
         """ sets data by tag"""
 
         obj = Factory(self.fileName, self.tableName)
@@ -22,7 +23,7 @@ class GetSet:
         obj.close()
         return rowId[0]
 
-    def get(self, tag:str):
+    def get(self, tag: str):
         """ get the row by Tag """
 
         obj = Factory(self.fileName, self.tableName)
