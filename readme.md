@@ -14,6 +14,8 @@ the idea is import the baseclass and then inherits into your own class. the idea
 
 ``` python 3
 
+    from tinydb_base import DatabaseBase
+
     class MyTable(DatabaseBase):
 
         def __init__(self, file='ds.json', table=__name__, requiredKeys=['title']):
@@ -32,7 +34,7 @@ this works excatly the same way as `DatabaseBase` but by provideing a salt you c
 
 ``` python 3
 
-from tinyDbBase.cryptography import DatabaseBaseSercure
+from tinydb_base.cryptography import DatabaseBaseSercure
 
 
 class Diary(DatabaseBaseSercure):
