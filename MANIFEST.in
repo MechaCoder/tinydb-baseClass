@@ -1,0 +1,7 @@
+include *.lock
+include *.md
+include Pipfile
+include *.py
+include *.txt
+recursive-include tests *.py
+recursive-include tinyDbBase *.py

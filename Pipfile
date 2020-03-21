@@ -1,0 +1,24 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+tox = "*"
+twine = "*"
+
+[packages]
+tinydb = "*"
+autopep8 = "*"
+check-manifest = "*"
+cryptography = "*"
+tinydb-baseclass = {editable = true,path = "."}
+
+[requires]
+python_version = "3.7"
+
+[scripts]
+autoStyle = "autopep8 --in-place"
+test = "python test_tinyDbBase.py"
+build = "python setup.py bdist_wheel sdist"
+deploy = "twine upload dist/* --verbose"
