@@ -4,7 +4,6 @@ file = open('readme.md', 'r')
 longDisc = file.read()
 file.close()
 
-
 setup(
     name='tinydb-baseClass',
     version='0.0.2',
