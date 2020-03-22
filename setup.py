@@ -14,6 +14,7 @@ setup(
     url='https://github.com/MechaCoder/tinyDbBase',
     py_modules=['tinydb_base'], 
     packages=find_packages(),
+    install_requires=['tinydb'],
     classifiers=[
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.6",
