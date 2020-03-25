@@ -15,7 +15,9 @@ def ymalExport(data: list, exportPath :str):
     
     goodrows = []
     for row in data:
-        print(row)
+
+        if isinstance(row, Document) is False:
+            raise ExportTypeError('the rows list must be popluated with `TinyDB.database.Document`')
 
         newRow = {'documentId': row.doc_id}
         
