@@ -72,6 +72,16 @@ class Diary(DatabaseBaseSercure):
 obj = Diary(salt='thisisasalt')
 ```
 
+#### methods
+
+|Method Name| attr | Description |
+|---|---|---|
+|create| dict | this adds a new row to the database.
+|createMultiple| list of dicts | this added multiple rows|
+|readAll|| returns a list obj|
+|readById|id| this gets a row by the id |
+|removeById|id|this removes a row by id |
+
 ### GetSet
 
 this is a very simple interface that sets and gets values based on a tag. this can be used for things like settings. if the tag dose did not exist the class will raise `tinydb_base.exceptions.RowNotFound_Exception`
@@ -86,4 +96,25 @@ class Settings(GetSet):
 
 Settings().set('foo', 'bar')
 Settings().get('foo')
+```
+
+### exporting table to File
+
+these functions export a list of documents into JSON or Ymal, the functions take a list of `documents` and the export path. this will create a file that has all the data and a human-readable time date stamp.
+
+``` python 3
+
+from tinydb_base.exporter import jsonExport
+from tinydb_base.exporter import ymalExport
+from tinydb_base import DatabaseBase
+
+a = DatabaseBase()
+
+for index in range(0, 10):
+    a.create({'title': index})
+
+b = jsonExport(a.readAll(), 'jsonData.json')
+b = ymalExport(a.readAll(), 'ymalData.ymal')
+
+
 ```
