@@ -20,9 +20,12 @@ class DatabaseBase:
         if isinstance(row, dict) is False:
             raise TypeError('the row must be a dict')
 
+        if len(row.keys()) is 0:
+            raise TypeError('the row must have key value pair.')
+
         for e in row.keys():
             if e not in self.requiredKeys:
-                raise KeyError('a required key has not been found in the row')
+                raise KeyError('a required key ({}) has not been found in the row'.format(e))
 
         db = self.createObj()
         rid = db.tbl.insert(row)
@@ -46,7 +49,7 @@ class DatabaseBase:
             for key in row.keys():  # checking the required keys are present.
                 if key not in self.requiredKeys:
                     raise Warning(
-                        'all rows must be have all required keys SKIPING')
+                        'all rows must be have all required keys ({}) SKIPING'.format(key))
                     continue
             goodrows.append(row)
 

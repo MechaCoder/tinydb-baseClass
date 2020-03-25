@@ -78,3 +78,9 @@ class TestData(TestCase):
         row = base.removeById(ident)
 
         self.assertTrue(row)
+
+    def testOneA(self):
+        base = DatabaseBase(self.fileName)
+        
+        with self.assertRaises(KeyError):
+            base.create({'something': 0})
