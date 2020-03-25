@@ -1,6 +1,7 @@
 from unittest import TestCase
 from os.path import exists 
-from time import time_ns
+from random import randint
+
 from tinydb_base.exporter import jsonExport, ymalExport
 from tinydb_base import DatabaseBase
 
@@ -12,7 +13,7 @@ class TestDB(DatabaseBase):
 class TestExporter(TestCase):
 
     def setUp(self):
-        self.fileStamp = "data_{}".format(time_ns())
+        self.fileStamp = "data_{}".format(randint(1, 75))
 
         for title in range(0,90):
             TestDB().create({'title': title})

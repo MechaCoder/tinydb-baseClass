@@ -1,4 +1,3 @@
-from time import time_ns
 from tinydb.database import Document
 from datetime import datetime
 from json import dumps

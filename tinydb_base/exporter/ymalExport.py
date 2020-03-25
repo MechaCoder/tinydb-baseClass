@@ -1,8 +1,8 @@
-from time import time_ns
 from tinydb.database import Document
 from datetime import datetime
 
 from yaml import load, dump
+
 try:
     from yaml import CLoader as Loader, CDumper as Dumper
 except ImportError:
