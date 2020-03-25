@@ -1,6 +1,7 @@
 from unittest import TestCase
 from os.path import exists 
 from random import randint
+from os import remove
 
 from tinydb_base.exporter import jsonExport, ymalExport
 from tinydb_base import DatabaseBase
@@ -38,3 +39,15 @@ class TestExporter(TestCase):
         )
 
         self.assertIsInstance(o, str)
+
+    def tearDown(self):
+        try:
+            remove(self.fileStamp + '.ymal')
+        except:
+            pass
+
+        try:
+            remove(self.fileStamp + '.json ')
+        except:
+            pass
+        return super().tearDown()

@@ -1,5 +1,6 @@
 from unittest import TestCase
 from random import choice
+from os import remove
 
 from tinydb.database import Document
 
@@ -84,3 +85,10 @@ class TestData(TestCase):
         
         with self.assertRaises(KeyError):
             base.create({'something': 0})
+
+    def tearDown(self):
+        try:
+            remove(self.fileName)
+        except:
+            pass
+        return super().tearDown()
