@@ -12,6 +12,7 @@ from .exceptions import ExportTypeError
 
 
 def ymalExport(data: list, exportPath :str):
+    """ exports a table into a Ymal file. """
     
     goodrows = []
     for row in data:

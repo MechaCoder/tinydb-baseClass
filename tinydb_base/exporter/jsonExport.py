@@ -6,6 +6,7 @@ from json import dumps
 from .exceptions import ExportTypeError
 
 def jsonExport(rows: list, exportPath: str):
+    """ Exports a table list data to a json file. """
 
     if isinstance(rows, list) is False:
         raise ExportTypeError('the rows must be a list')
