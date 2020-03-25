@@ -1,4 +1,5 @@
 from unittest import TestCase
+from os.path import exists
 
 from tinydb import TinyDB
 
@@ -7,6 +8,10 @@ class TestDataFile(TestCase):
 
     def testOne(self):
         """ tests table names """
+
+        if exists('ds.test.json') is False:
+            self.skipTest()
+
         obj = TinyDB('ds.test.json')
         tableNames = obj.tables()
         obj.close()
