@@ -10,8 +10,8 @@ class TestExport(TestCase):
     def testExportToDict(self):
         db = DatabaseBase('ds.test.json')
 
-        for thing in range(0,500):
-            db.create({'title': '{}-{}'.format(thing, random()) })
+        for thing in range(0, 500):
+            db.create({'title': '{}-{}'.format(thing, random())})
 
         randomRow = choice(db.readAll())
 

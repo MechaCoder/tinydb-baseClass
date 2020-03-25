@@ -82,7 +82,7 @@ class TestData(TestCase):
 
     def testOneA(self):
         base = DatabaseBase(self.fileName)
-        
+
         with self.assertRaises(KeyError):
             base.create({'something': 0})
 

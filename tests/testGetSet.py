@@ -35,7 +35,6 @@ class TestGetSet(TestCase):
         with self.assertRaises(RowNotFound_Exception) as context:
             obj.get('setings 101')
 
-
     def test_defaultRows(self):
 
         obj = GetSet(self.fileName)
@@ -58,6 +57,3 @@ class TestGetSet(TestCase):
     def tearDown(self):
         remove(self.fileName)
         return super().tearDown()
-
-
-

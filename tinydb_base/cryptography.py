@@ -63,7 +63,8 @@ class DatabaseBaseSercure(DatabaseBase):
 
         for key in row.keys():
             if key not in self.requiredKeys:
-                raise KeyError('a required key ({}) has not been found in the row'.format(key))
+                raise KeyError(
+                    'a required key ({}) has not been found in the row'.format(key))
 
         newRow = {}
         fernet = FernetFactory(pw, self.salt)
@@ -100,7 +101,8 @@ class DatabaseBaseSercure(DatabaseBase):
             newRow = {}
             for key in row.keys():
                 if key not in self.requiredKeys:
-                    raise Warning('a required key ({}) has not been found in the row'.format(key))
+                    raise Warning(
+                        'a required key ({}) has not been found in the row'.format(key))
                     continue
 
                 newKey = fernet.encrypt(key)
