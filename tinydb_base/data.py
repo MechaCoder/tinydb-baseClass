@@ -25,7 +25,8 @@ class DatabaseBase:
 
         for e in row.keys():
             if e not in self.requiredKeys:
-                raise KeyError('a required key ({}) has not been found in the row'.format(e))
+                raise KeyError(
+                    'a required key ({}) has not been found in the row'.format(e))
 
         db = self.createObj()
         rid = db.tbl.insert(row)
