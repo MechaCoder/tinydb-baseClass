@@ -4,6 +4,7 @@ from tests.testData import TestData
 from tests.testOutput import TestExport
 from tests.testCryptography import TestFernetFactory, TestDatabaseBaseSercure
 from tests.testGetSet import TestGetSet
+from tests.testGetSetSercure import TestGetSetSercure
 from tests.testExporter import TestExporter
 
 if __name__ == '__main__':
