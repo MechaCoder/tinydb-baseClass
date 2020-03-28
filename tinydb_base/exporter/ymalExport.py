@@ -1,4 +1,4 @@
-from tinydb.database import Document
+# file deepcode ignore W0611: <supporting>
 from datetime import datetime
 
 from yaml import load, dump
@@ -8,6 +8,7 @@ try:
 except ImportError:
     from yaml import Loader, Dumper
 
+from tinydb.database import Document
 from .exceptions import ExportTypeError
 
 
