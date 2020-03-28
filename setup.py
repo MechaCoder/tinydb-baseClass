@@ -9,10 +9,10 @@ setup(
     version='0.1.1',
     description='a base class to tinydb',
     long_description=longDisc,
-    long_description_content_type = "text/markdown",
+    long_description_content_type="text/markdown",
     author='postitnotenija',
     url='https://github.com/MechaCoder/tinyDbBase',
-    py_modules=['tinydb_base'], 
+    py_modules=['tinydb_base'],
     packages=find_packages(),
     install_requires=['tinydb', 'cryptography', 'pyyaml'],
     classifiers=[

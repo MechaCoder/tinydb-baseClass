@@ -29,9 +29,8 @@ class TestGetSetSercure(TestCase):
 
         v = obj.get(tag)
 
-
         self.assertIsInstance(v, str)
-        self.assertEqual( str(val), v)
+        self.assertEqual(str(val), v)
 
     def tearDown(self):
         # remove(self.fileName)

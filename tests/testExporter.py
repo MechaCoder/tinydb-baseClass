@@ -1,6 +1,6 @@
 from unittest import TestCase
-from os.path import exists
 from random import randint
+from os.path import exists
 from os import remove
 
 from tinydb_base.exporter import jsonExport, ymalExport

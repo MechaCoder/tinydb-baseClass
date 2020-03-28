@@ -24,14 +24,14 @@ class GetSetSercure:
         cleanRows = []
         for row in obj.tbl.all():
             cleanRows.append({
-                    'ident': row.doc_id,
-                    'tag': fernet.decrypt(row['tag'])
-                })
+                'ident': row.doc_id,
+                'tag': fernet.decrypt(row['tag'])
+            })
         obj.close()
         return cleanRows
 
     def _updateValueById(self, id: int, tag: str, newValue: str):
-        
+
         obj = Factory(self.fileName, self.tableName)
         fernet = FernetFactory(self.pw, self.salt)
         s_newVal = fernet.encrypt(newValue)
@@ -50,7 +50,7 @@ class GetSetSercure:
             if row['tag'] is tag:
                 tagFound = True
                 self._updateValueById(row['ident'], tag, value)
-        
+
         if tagFound:
             return True
         obj = Factory(self.fileName, self.tableName)
@@ -60,8 +60,6 @@ class GetSetSercure:
         })
         obj.close()
         return True
-
-        
 
     def get(self, tag: str):
         """ get the row by Tag """
