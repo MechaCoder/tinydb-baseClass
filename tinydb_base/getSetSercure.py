@@ -30,13 +30,13 @@ class GetSetSercure:
         obj.close()
         return cleanRows
 
-    def _updateValueById(self, id: int, tag: str, newValue: str):
+    def _updateValueById(self, ident: int, tag: str, newValue: str):
 
         obj = Factory(self.fileName, self.tableName)
         fernet = FernetFactory(self.pw, self.salt)
         s_newVal = fernet.encrypt(newValue)
         s_tag = fernet.encrypt(tag)
-        obj.tbl.update({'tag': s_tag, 'val': s_newVal}, doc_ids=[id])
+        obj.tbl.update({'tag': s_tag, 'val': s_newVal}, doc_ids=[ident])
         obj.close()
         return True
 

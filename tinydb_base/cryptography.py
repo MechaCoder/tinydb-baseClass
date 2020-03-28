@@ -143,7 +143,7 @@ class DatabaseBaseSercure(DatabaseBase):
 
                 newrow[newkey] = newVal
 
-            if len(newrow) == 0:
+            if newrow is {}:
                 continue
             goodRows.append(newrow)
         return goodRows

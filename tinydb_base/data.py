@@ -1,5 +1,3 @@
-from tinydb import Query
-
 from .factory import Factory
 
 
@@ -20,7 +18,7 @@ class DatabaseBase:
         if isinstance(row, dict) is False:
             raise TypeError('the row must be a dict')
 
-        if len(row.keys()) is 0:
+        if row is {}:
             raise TypeError('the row must have key value pair.')
 
         for e in row.keys():
@@ -45,13 +43,11 @@ class DatabaseBase:
 
             if isinstance(row, dict) is False:
                 raise Warning('all rows must be a dict SKIPING')
-                continue
 
             for key in row.keys():  # checking the required keys are present.
                 if key not in self.requiredKeys:
                     raise Warning(
                         'all rows must be have all required keys ({}) SKIPING'.format(key))
-                    continue
             goodrows.append(row)
 
         db = self.createObj()
