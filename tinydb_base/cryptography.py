@@ -37,6 +37,10 @@ class FernetFactory:
 
     def encrypt(self, msg: str):
         fernet = Fernet(self.key)
+
+        if isinstance(msg, str) is False:
+            msg = str(msg)
+
         msg = msg.encode()
         return fernet.encrypt(msg).decode()
 
