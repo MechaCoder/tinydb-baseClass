@@ -16,33 +16,52 @@ class GetSetSercure:
         self.salt = salt
         self.pw = pw
 
+    def _tagList(self):
+        """ returns a list of the tags """
+        fernet = FernetFactory(self.pw, self.salt)
+        obj = Factory(self.fileName, self.tableName)
+
+        cleanRows = []
+        for row in obj.tbl.all():
+            cleanRows.append({
+                    'ident': row.doc_id,
+                    'tag': fernet.decrypt(row['tag'])
+                })
+        obj.close()
+        return cleanRows
+
+    def _updateValueById(self, id: int, tag: str, newValue: str):
+        
+        obj = Factory(self.fileName, self.tableName)
+        fernet = FernetFactory(self.pw, self.salt)
+        s_newVal = fernet.encrypt(newValue)
+        s_tag = fernet.encrypt(tag)
+        obj.tbl.update({'tag': s_tag, 'val': s_newVal}, doc_ids=[id])
+        obj.close()
+        return True
+
     def set(self, tag: str, value: str):
         """ sets data by tag"""
 
         fernet = FernetFactory(self.pw, self.salt)
-        try:
-            
-            self.get(tag) # if the row dose not exist will raise a RowNotFound_Exception
-            rowId = None
-            db = Factory(self.fileName, self.tableName)
-            for row in obj.tab.all():
-                if fernet.decrypt(row['tag']) == tag:
-                    rowId = row.doc_id
-            
-            if rowId is None:
-                raise RowNotFound_Exception()
-            
-            sValue = fernet.encrypt(value)
-            db.tbl.update({'val': sValue}, doc_ids=[rowId])
-            db.close()
-            
-        except RowNotFound_Exception:
-            db2 = Factory(self.fileName, self.tableName)
-            sTag = fernet.encrypt(tag)
-            SVal = fernet.encrypt(value)
-            db2.tbl.insert({'tag': sTag, 'val': SVal})
-            db2.close()
+
+        tagFound = False
+        for row in self._tagList():
+            if row['tag'] is tag:
+                tagFound = True
+                self._updateValueById(row['ident'], tag, value)
+        
+        if tagFound:
+            return True
+        obj = Factory(self.fileName, self.tableName)
+        obj.tbl.insert({
+            'tag': fernet.encrypt(tag),
+            'val': fernet.encrypt(value)
+        })
+        obj.close()
         return True
+
+        
 
     def get(self, tag: str):
         """ get the row by Tag """

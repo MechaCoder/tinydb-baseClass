@@ -17,7 +17,7 @@ class TestGetSetSercure(TestCase):
         obj = GetSetSercure(self.salt, self.pw, self.fileName)
         newId = obj.set('random_int', randint(0, 999))
 
-        self.assertIsInstance(newId, int)
+        self.assertIsInstance(newId, bool)
 
     def test_get(self):
         obj = GetSetSercure(self.salt, self.pw, self.fileName)
@@ -34,5 +34,5 @@ class TestGetSetSercure(TestCase):
         self.assertEqual( str(val), v)
 
     def tearDown(self):
-        remove(self.fileName)
+        # remove(self.fileName)
         return super().tearDown()
