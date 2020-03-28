@@ -15,43 +15,48 @@ class GetSetSercure:
         self.tableName = table
         self.salt = salt
         self.pw = pw
-        self.defaultRows({})
-
-    def defaultRows(self, dRows: dict):
-        """ runs on instance - adds any rows only if the tag dose not exist, takes a dict"""
-        factory = Factory(self.fileName, self.tableName)
-        for tag in dRows.keys():
-            if factory.tbl.contains(Query().tag == tag) is False:
-                self.set(tag, dRows[tag])
-        factory.close()
 
     def set(self, tag: str, value: str):
         """ sets data by tag"""
 
         fernet = FernetFactory(self.pw, self.salt)
-        tag = fernet.encrypt(tag)
-        value = fernet.encrypt(value)
-
-        obj = Factory(self.fileName, self.tableName)
-        rowId = obj.tbl.upsert({
-            'tag': tag,
-            'val': value
-        }, Query().tag == tag)
-        obj.close()
-        return rowId[0]
+        try:
+            
+            self.get(tag) # if the row dose not exist will raise a RowNotFound_Exception
+            rowId = None
+            db = Factory(self.fileName, self.tableName)
+            for row in obj.tab.all():
+                if fernet.decrypt(row['tag']) == tag:
+                    rowId = row.doc_id
+            
+            if rowId is None:
+                raise RowNotFound_Exception()
+            
+            sValue = fernet.encrypt(value)
+            db.tbl.update({'val': sValue}, doc_ids=[rowId])
+            db.close()
+            
+        except RowNotFound_Exception:
+            db2 = Factory(self.fileName, self.tableName)
+            sTag = fernet.encrypt(tag)
+            SVal = fernet.encrypt(value)
+            db2.tbl.insert({'tag': sTag, 'val': SVal})
+            db2.close()
+        return True
 
     def get(self, tag: str):
         """ get the row by Tag """
 
         obj = Factory(self.fileName, self.tableName)
         fernet = FernetFactory(self.pw, self.salt)
-        tag = fernet.encrypt(tag)
+        stag = fernet.encrypt(tag)
 
-        if obj.tbl.contains(Query().tag == tag) is False:
-            obj.close()
-            raise RowNotFound_Exception('row has not been found.')
-
-        row = obj.tbl.get(Query().tag == tag)
-        returnVal = fernet.decrypt(row['val'])
+        returnVal = ''
+        for row in obj.tbl.all():
+            if fernet.decrypt(row['tag']) == tag:
+                returnVal = fernet.decrypt(row['val'])
+                break
+        if returnVal is '':
+            raise RowNotFound_Exception('tag has not been found')
         obj.close()
         return returnVal
