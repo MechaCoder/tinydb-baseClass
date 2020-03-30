@@ -70,7 +70,7 @@ class GetSetSercure:
             if fernet.decrypt(row['tag']) == tag:
                 returnVal = fernet.decrypt(row['val'])
                 break
-        if returnVal is '':
+        if returnVal == '':
             raise RowNotFound_Exception('tag has not been found')
         obj.close()
         return returnVal
