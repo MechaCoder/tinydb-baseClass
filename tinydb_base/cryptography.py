@@ -107,7 +107,6 @@ class DatabaseBaseSercure(DatabaseBase):
                 if key not in self.requiredKeys:
                     raise Warning(
                         'a required key ({}) has not been found in the row'.format(key))
-                    continue
 
                 newKey = fernet.encrypt(key)
                 newVal = fernet.encrypt(row[key])

@@ -18,7 +18,7 @@ class DatabaseBase:
         if isinstance(row, dict) is False:
             raise TypeError('the row must be a dict')
 
-        if row is {}:
+        if row == {}:
             raise TypeError('the row must have key value pair.')
 
         for e in row.keys():
