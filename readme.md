@@ -34,7 +34,7 @@ the idea is to import the base class and then derives into your own class. the i
 
     class MyTable(DatabaseBase):
 
-        def __init__(self, file='ds.json', table=__name__, requiredKeys=['title']):
+        def __init__(self, file='ds.json', table=__name__, requiredKeys='title'):
             super().__init__(file=file, table=table, requiredKeys=requiredKeys)
 
 
@@ -65,7 +65,7 @@ from tinydb_base.cryptography import DatabaseBaseSercure
 
 class Diary(DatabaseBaseSercure):
 
-    def __init__(self, file='ds.json', table=__name__, requiredKeys=['title'], salt='salt'):
+    def __init__(self, file='ds.json', table=__name__, requiredKeys='title,content', salt='salt'):
         super().__init__(file=file, table=table, requiredKeys=requiredKeys, salt=salt)
 
 

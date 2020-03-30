@@ -1,6 +1,6 @@
 from unittest import TestCase
-from os.path import exists
 from random import randint
+from os.path import exists
 from os import remove
 
 from tinydb_base.exporter import jsonExport, ymalExport
@@ -9,7 +9,7 @@ from tinydb_base import DatabaseBase
 
 class TestDB(DatabaseBase):
 
-    def __init__(self, file='ds.test.json', table=__name__, requiredKeys=['title']):
+    def __init__(self, file='ds.test.json', table=__name__, requiredKeys='title'):
         super().__init__(file=file, table=table, requiredKeys=requiredKeys)
 
 

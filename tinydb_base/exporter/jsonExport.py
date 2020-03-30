@@ -1,6 +1,7 @@
-from tinydb.database import Document
 from datetime import datetime
 from json import dumps
+
+from tinydb.database import Document
 
 from .exceptions import ExportTypeError
 

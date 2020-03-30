@@ -1,3 +1,5 @@
+# file deepcode ignore W0611: this is a test running file and connects a runtime to all testing in the project
+
 from unittest import main
 from tests.testFactory import TestFactory
 from tests.testData import TestData

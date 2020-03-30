@@ -52,7 +52,7 @@ class FernetFactory:
 
 class DatabaseBaseSercure(DatabaseBase):
 
-    def __init__(self, file='ds.json', table=__name__, requiredKeys=['title'], salt='salt'):
+    def __init__(self, file='ds.json', table=__name__, requiredKeys='title', salt='salt'):
         super().__init__(file=file, table=table, requiredKeys=requiredKeys)
         self.salt = salt
 
@@ -107,7 +107,6 @@ class DatabaseBaseSercure(DatabaseBase):
                 if key not in self.requiredKeys:
                     raise Warning(
                         'a required key ({}) has not been found in the row'.format(key))
-                    continue
 
                 newKey = fernet.encrypt(key)
                 newVal = fernet.encrypt(row[key])
@@ -143,7 +142,7 @@ class DatabaseBaseSercure(DatabaseBase):
 
                 newrow[newkey] = newVal
 
-            if len(newrow) == 0:
+            if newrow == {}:
                 continue
             goodRows.append(newrow)
         return goodRows

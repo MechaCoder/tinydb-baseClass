@@ -14,12 +14,15 @@ check-manifest = "*"
 cryptography = "*"
 tinydb-baseclass = {editable = true,path = "."}
 pyyaml = "*"
+deepcode = "*"
 
 [requires]
 python_version = "3.7"
 
 [scripts]
 autoStyle = "autopep8 --in-place"
+deepcodeAnalyze = "deepcode analyze -p ./tinydb_base --severity info"
+
 test = "python test_tinyDbBase.py"
 build = "python setup.py bdist_wheel sdist"
 deploy = "twine upload dist/* --verbose"
