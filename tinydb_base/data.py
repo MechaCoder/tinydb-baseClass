@@ -3,12 +3,12 @@ from .factory import Factory
 
 class DatabaseBase:
 
-    def __init__(self, file: str = 'ds.json', table: str = __name__, requiredKeys=['title']):
+    def __init__(self, file: str = 'ds.json', table: str = __name__, requiredKeys='title'):
         super().__init__()
 
         self.fileName = file
         self.table = table
-        self.requiredKeys = requiredKeys
+        self.requiredKeys = requiredKeys.split(',')
 
         self.createObj = lambda: Factory(self.fileName, self.table)
 

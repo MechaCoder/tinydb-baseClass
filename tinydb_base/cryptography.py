@@ -52,7 +52,7 @@ class FernetFactory:
 
 class DatabaseBaseSercure(DatabaseBase):
 
-    def __init__(self, file='ds.json', table=__name__, requiredKeys=['title'], salt='salt'):
+    def __init__(self, file='ds.json', table=__name__, requiredKeys='title', salt='salt'):
         super().__init__(file=file, table=table, requiredKeys=requiredKeys)
         self.salt = salt
 
