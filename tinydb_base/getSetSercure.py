@@ -1,7 +1,4 @@
-from tinydb import Query
-
 from .factory import Factory
-from .getSet import GetSet
 from .cryptography import FernetFactory
 from .exceptions import RowNotFound_Exception
 
