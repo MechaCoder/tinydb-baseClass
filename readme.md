@@ -2,6 +2,10 @@
 
 I use TinyDB ... a lot and very often and i seem to be writing the same functions over and over. The idea behind the small project to provide a way for devs to easily create a data modal around tinydb without the need to build a base class.
 
+## Important
+
++ BREAKING CHANGE; there is a breaking in `tinydb_base.bata.DatabaseBase`, i have changed that way you define column heads in tables they are now a csl (comma separated list)
+
 ## How to install
 
 the easiest way is to install through your dependency manager `pip install tinyDbBase` or if using `pipenv install tinyDbBase`.
@@ -34,11 +38,11 @@ the idea is to import the base class and then derives into your own class. the i
 
     class MyTable(DatabaseBase):
 
-        def __init__(self, file='ds.json', table=__name__, requiredKeys='title'):
+        def __init__(self, file='ds.json', table=__name__, requiredKeys='title,myContent'):
             super().__init__(file=file, table=table, requiredKeys=requiredKeys)
 
 
-    MyTable().create({'title': 'foobar'})
+    MyTable().create({'title': 'foobar', 'myContent': 'this is a string'})
 
 ```
 
@@ -72,8 +76,6 @@ class Diary(DatabaseBaseSercure):
 obj = Diary(salt='thisisasalt')
 ```
 
-#### methods
-
 |Method Name| attr | Description |
 |---|---|---|
 |create| dict | this adds a new row to the database.
@@ -96,6 +98,41 @@ class Settings(GetSet):
 
 Settings().set('foo', 'bar')
 Settings().get('foo')
+```
+
+#### defualting keys
+
+if you need to have keys in your data file, you can make sure that they exist.
+
+``` python 3
+
+from tinydb_base.getSet import GetSet
+
+class Settings(GetSet):
+
+    def __init__(self, salt, pw, file='ds.json', table=__name__):
+        super().__init__(salt, pw, file=file, table=table)
+        self.defaultRows({
+            'foo': 'bar'
+        })
+
+```
+
+### GetSetSercure
+
+Works the same as `GetSet` but both the tags and the values encrypted.
+
+```python 3
+
+from tinydb_base.getSetSercure import GetSetSercure
+
+class PasswordCode(GetSetSercure):
+
+    def __init__(self, salt, pw, file='ds.json', table=__name__):
+        super().__init__(salt, pw, file=file, table=table)
+
+obj = PasswordCode('salty', 'notasercurepassword').set('foo', 'bar')
+
 ```
 
 ### exporting table to File
