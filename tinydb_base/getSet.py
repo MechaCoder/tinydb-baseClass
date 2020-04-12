@@ -11,6 +11,15 @@ class GetSet:
 
         self.fileName = file
         self.tableName = table
+        self.defaultRows({})
+
+    def defaultRows(self, dRows: dict):
+        """ runs on instance - adds any rows only if the tag dose not exist, takes a dict"""
+        factory = Factory(self.fileName, self.tableName)
+        for tag in dRows.keys():
+            if factory.tbl.contains(Query().tag == tag) is False:
+                self.set(tag, dRows[tag])
+        factory.close()
 
     def set(self, tag: str, value: str):
         """ sets data by tag"""

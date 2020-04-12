@@ -1,5 +1,6 @@
 from unittest import TestCase
 from random import randint
+from os import remove
 
 from tinydb_base.getSet import GetSet
 from tinydb_base.exceptions import RowNotFound_Exception
@@ -8,7 +9,7 @@ from tinydb_base.exceptions import RowNotFound_Exception
 class TestGetSet(TestCase):
 
     def setUp(self):
-        self.fileName = 'ds.test.json'
+        self.fileName = 'ds.getset.test.json'
 
     def test_set(self):
         obj = GetSet(self.fileName)
@@ -33,3 +34,26 @@ class TestGetSet(TestCase):
 
         with self.assertRaises(RowNotFound_Exception) as context:
             obj.get('setings 101')
+
+    def test_defaultRows(self):
+
+        obj = GetSet(self.fileName)
+        val = randint(0, 50000)
+        obj.defaultRows({'testValue': val})
+
+        self.assertEqual(
+            obj.get('testValue'),
+            val
+        )
+
+        val2 = randint(50000, 60000)
+        obj.defaultRows({'testValue': val2})
+
+        self.assertIsNot(
+            obj.get('testValue'),
+            val2
+        )
+
+    def tearDown(self):
+        remove(self.fileName)
+        return super().tearDown()

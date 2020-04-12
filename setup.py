@@ -6,14 +6,15 @@ file.close()
 
 setup(
     name='tinydb-baseClass',
-    version='0.1.0',
+    version='0.2.0',
     description='a base class to tinydb',
     long_description=longDisc,
-    long_description_content_type = "text/markdown",
+    long_description_content_type="text/markdown",
     author='postitnotenija',
     url='https://github.com/MechaCoder/tinyDbBase',
-    py_modules=['tinydb_base'], 
+    py_modules=['tinydb_base'],
     packages=find_packages(),
+    install_requires=['tinydb', 'cryptography', 'pyyaml'],
     classifiers=[
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.6",

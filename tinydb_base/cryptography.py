@@ -37,6 +37,10 @@ class FernetFactory:
 
     def encrypt(self, msg: str):
         fernet = Fernet(self.key)
+
+        if isinstance(msg, str) is False:
+            msg = str(msg)
+
         msg = msg.encode()
         return fernet.encrypt(msg).decode()
 
@@ -48,7 +52,7 @@ class FernetFactory:
 
 class DatabaseBaseSercure(DatabaseBase):
 
-    def __init__(self, file='ds.json', table=__name__, requiredKeys=['title'], salt='salt'):
+    def __init__(self, file='ds.json', table=__name__, requiredKeys='title', salt='salt'):
         super().__init__(file=file, table=table, requiredKeys=requiredKeys)
         self.salt = salt
 
@@ -63,7 +67,8 @@ class DatabaseBaseSercure(DatabaseBase):
 
         for key in row.keys():
             if key not in self.requiredKeys:
-                raise TypeError('required keys not found')
+                raise KeyError(
+                    'a required key ({}) has not been found in the row'.format(key))
 
         newRow = {}
         fernet = FernetFactory(pw, self.salt)
@@ -100,8 +105,8 @@ class DatabaseBaseSercure(DatabaseBase):
             newRow = {}
             for key in row.keys():
                 if key not in self.requiredKeys:
-                    raise Warning('requred key not found')
-                    continue
+                    raise Warning(
+                        'a required key ({}) has not been found in the row'.format(key))
 
                 newKey = fernet.encrypt(key)
                 newVal = fernet.encrypt(row[key])
@@ -137,7 +142,7 @@ class DatabaseBaseSercure(DatabaseBase):
 
                 newrow[newkey] = newVal
 
-            if len(newrow) == 0:
+            if newrow == {}:
                 continue
             goodRows.append(newrow)
         return goodRows

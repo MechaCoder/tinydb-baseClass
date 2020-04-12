@@ -1,16 +1,14 @@
-from tinydb import Query
-
 from .factory import Factory
 
 
 class DatabaseBase:
 
-    def __init__(self, file: str = 'ds.json', table: str = __name__, requiredKeys=['title']):
+    def __init__(self, file: str = 'ds.json', table: str = __name__, requiredKeys='title'):
         super().__init__()
 
         self.fileName = file
         self.table = table
-        self.requiredKeys = requiredKeys
+        self.requiredKeys = requiredKeys.split(',')
 
         self.createObj = lambda: Factory(self.fileName, self.table)
 
@@ -20,9 +18,13 @@ class DatabaseBase:
         if isinstance(row, dict) is False:
             raise TypeError('the row must be a dict')
 
+        if row == {}:
+            raise TypeError('the row must have key value pair.')
+
         for e in row.keys():
             if e not in self.requiredKeys:
-                raise KeyError('a required key has not been found in the row')
+                raise KeyError(
+                    'a required key ({}) has not been found in the row'.format(e))
 
         db = self.createObj()
         rid = db.tbl.insert(row)
@@ -41,13 +43,11 @@ class DatabaseBase:
 
             if isinstance(row, dict) is False:
                 raise Warning('all rows must be a dict SKIPING')
-                continue
 
             for key in row.keys():  # checking the required keys are present.
                 if key not in self.requiredKeys:
                     raise Warning(
-                        'all rows must be have all required keys SKIPING')
-                    continue
+                        'all rows must be have all required keys ({}) SKIPING'.format(key))
             goodrows.append(row)
 
         db = self.createObj()
