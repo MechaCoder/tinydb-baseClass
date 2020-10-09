@@ -86,8 +86,8 @@ class DatabaseBase:
         """ clears all data in tables from db file. """
         tdb = self.createObj()
         try:
-            tdb.db.drop_table(self.table) # python36
+            tdb.db.drop_table(self.table)  # python36
         except AttributeError:
-            tdb.db.purge_table(self.table) # python37, python38
+            tdb.db.purge_table(self.table)  # python37, python38
         tdb.close()
         return True

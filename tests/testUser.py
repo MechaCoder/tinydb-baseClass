@@ -4,6 +4,7 @@ from string import ascii_letters, punctuation, digits
 
 from tinydb_base.user import User
 
+
 class TestUser(TestCase):
 
     def setUp(self):

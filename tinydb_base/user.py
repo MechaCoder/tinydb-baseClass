@@ -5,7 +5,8 @@ from tinydb import Query
 
 from .data import DatabaseBase
 
-def mkpassword(passcode:str, salt:bytes):
+
+def mkpassword(passcode: str, salt: bytes):
     # salt = urandom(32)
     key = pbkdf2_hmac(
         'sha256',
@@ -16,23 +17,23 @@ def mkpassword(passcode:str, salt:bytes):
 
     return salt.hex() + key.hex()
 
+
 class User(DatabaseBase):
 
     def __init__(self, file='ds.json', table='users', requiredKeys='username,password'):
-            super().__init__(file=file, table=table, requiredKeys=requiredKeys)
+        super().__init__(file=file, table=table, requiredKeys=requiredKeys)
 
-    def makeUser(self, username:str, password:str):
+    def makeUser(self, username: str, password: str):
         """ creates a user """
 
         pw = mkpassword(password, urandom(32))
-
 
         return self.create({
             'username': username,
             'password': pw
         })
 
-    def testUser(self, userId:int, password:str):
+    def testUser(self, userId: int, password: str):
         """ tests the password on user id"""
         user = self.readById(userId)
         if user == None:
@@ -45,7 +46,7 @@ class User(DatabaseBase):
             return True
         return False
 
-    def authUser(self, username:str, password:str):
+    def authUser(self, username: str, password: str):
         """ authenticates a users based on the username and password """
         tdb = self.createObj()
         row = tdb.tbl.get(Query()['username'] == username)
