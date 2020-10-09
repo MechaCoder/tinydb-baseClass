@@ -86,6 +86,31 @@ obj = Diary(salt='thisisasalt')
 |removeById|id|this removes a row by id |
 |clear||this removes all data from the table|
 
+### User
+Something that alot of systems need to is work with user componants, this is a
+simple class that enables Users to be created, it is a class that is inherted
+from `DatabaseBase`, but has speail methods that pertain to Users
+
+``` Python 3
+
+from tinydb_base import User
+usrTable = User() # will work with a user as a table,
+>>> usrTable.makeUser('me', 'mypassword')
+1
+>>> usrTable.authUser('me', '!mypassword')
+False
+>>> usrTable.authUser('me', 'mypassword')
+True
+
+```
+
+|Method Name| attr | Description |
+|---|---|---|
+|makeUser| username, password | creates a user in the system|
+|testUser| userId, password | tests a password angest a user id|
+|authUser| username, password| test a username and password|
+
+
 ### GetSet
 
 this is a very simple interface that sets and gets values based on a tag. this can be used for things like settings. if the tag dose did not exist the class will raise `tinydb_base.exceptions.RowNotFound_Exception`
