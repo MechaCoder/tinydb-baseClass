@@ -57,6 +57,7 @@ This will enable to accesses the base class, you can add your own custom functio
 |readAll|| returns a list obj|
 |readById|id| this gets a row by the id |
 |removeById|id|this removes a row by id |
+|clear||this removes all data from the table|
 
 ### DatabaseBaseSercure
 
@@ -83,6 +84,7 @@ obj = Diary(salt='thisisasalt')
 |readAll|| returns a list obj|
 |readById|id| this gets a row by the id |
 |removeById|id|this removes a row by id |
+|clear||this removes all data from the table|
 
 ### GetSet
 
