@@ -81,3 +81,13 @@ class DatabaseBase:
         db.tbl.remove(doc_ids=[doc_id])
         db.close()
         return True
+
+    def clear(self):
+        """ clears all data in tables from db file. """
+        tdb = self.createObj()
+        try:
+            tdb.db.drop_table(self.table) # python36
+        except AttributeError:
+            tdb.db.purge_table(self.table) # python37, python38
+        tdb.close()
+        return True
