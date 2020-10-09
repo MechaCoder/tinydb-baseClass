@@ -36,7 +36,7 @@ class User(DatabaseBase):
     def testUser(self, userId: int, password: str):
         """ tests the password on user id"""
         user = self.readById(userId)
-        if user == None:
+        if user is None:
             return False
 
         salt = user['password'][:64]
