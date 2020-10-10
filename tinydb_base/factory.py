@@ -4,7 +4,7 @@ from tinydb import TinyDB
 class Factory:
 
     def __init__(self, file: str, table: str = '_default'):
-        """ 
+        """
             this a Object factory this allows a user to access the TinyDB object, and TinyDB.table
             useing a simple api
         """
@@ -19,6 +19,7 @@ class Factory:
         self.db = TinyDB(file)
         self.tbl = self.db.table(table)
 
-    def close(self):
+    def close(self) -> bool:
         """ this closes this a files """
         self.db.close()
+        return True

@@ -13,7 +13,7 @@ class GetSet:
         self.tableName = table
         self.defaultRows({})
 
-    def defaultRows(self, dRows: dict):
+    def defaultRows(self, dRows: dict) -> None:
         """ runs on instance - adds any rows only if the tag dose not exist, takes a dict"""
         factory = Factory(self.fileName, self.tableName)
         for tag in dRows.keys():
@@ -21,7 +21,7 @@ class GetSet:
                 self.set(tag, dRows[tag])
         factory.close()
 
-    def set(self, tag: str, value: str):
+    def set(self, tag: str, value: str) -> int:
         """ sets data by tag"""
 
         obj = Factory(self.fileName, self.tableName)
@@ -32,7 +32,7 @@ class GetSet:
         obj.close()
         return rowId[0]
 
-    def get(self, tag: str):
+    def get(self, tag: str) -> str:
         """ get the row by Tag """
 
         obj = Factory(self.fileName, self.tableName)

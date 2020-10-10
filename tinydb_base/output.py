@@ -1,7 +1,7 @@
 from tinydb.database import Document
 
 
-def exportToDict(row: Document):
+def exportToDict(row: Document) -> dict:
     """ export passed document to a dict """
 
     if isinstance(row, Document) is False:
@@ -16,7 +16,7 @@ def exportToDict(row: Document):
     return newRow
 
 
-def exportToListOfDicts(lis: list):
+def exportToListOfDicts(lis: list) -> list:
     """ exports a list of documents to a list of dicts """
 
     if isinstance(lis, list) is False:

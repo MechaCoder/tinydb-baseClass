@@ -27,7 +27,7 @@ class GetSetSercure:
         obj.close()
         return cleanRows
 
-    def _updateValueById(self, ident: int, tag: str, newValue: str):
+    def _updateValueById(self, ident: int, tag: str, newValue: str) -> bool:
 
         obj = Factory(self.fileName, self.tableName)
         fernet = FernetFactory(self.pw, self.salt)
@@ -37,7 +37,7 @@ class GetSetSercure:
         obj.close()
         return True
 
-    def set(self, tag: str, value: str):
+    def set(self, tag: str, value: str) -> bool:
         """ sets data by tag"""
 
         fernet = FernetFactory(self.pw, self.salt)
@@ -58,7 +58,7 @@ class GetSetSercure:
         obj.close()
         return True
 
-    def get(self, tag: str):
+    def get(self, tag: str) -> str:
         """ get the row by Tag """
 
         obj = Factory(self.fileName, self.tableName)
