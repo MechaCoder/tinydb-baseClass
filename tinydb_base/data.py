@@ -1,4 +1,5 @@
 from .factory import Factory
+from tinydb.table import Document
 
 
 class DatabaseBase:
@@ -12,7 +13,7 @@ class DatabaseBase:
 
         self.createObj = lambda: Factory(self.fileName, self.table)
 
-    def create(self, row: dict):
+    def create(self, row: dict) -> int:
         """ inserts a single row into the database """
 
         if isinstance(row, dict) is False:
@@ -32,7 +33,7 @@ class DatabaseBase:
 
         return rid
 
-    def createMultiple(self, rows: list):
+    def createMultiple(self, rows: list) -> list:
         """ adds multipe rows to the database in one go """
 
         if isinstance(rows, list) is False:
@@ -55,14 +56,14 @@ class DatabaseBase:
         db.close()
         return newIds
 
-    def readAll(self):
+    def readAll(self) -> list:
         """ returns all rows as tinydb.document"""
         db = self.createObj()
         rows = db.tbl.all()
         db.close()
         return rows
 
-    def readById(self, doc_id: int):
+    def readById(self, doc_id: int) -> Document:
         """ reads a row by the document_id """
 
         if isinstance(doc_id, int) is False:
@@ -72,7 +73,7 @@ class DatabaseBase:
         db.close()
         return row
 
-    def removeById(self, doc_id: int):
+    def removeById(self, doc_id: int) -> bool:
         """ removes the row by the document_id """
 
         if isinstance(doc_id, int) is False:
@@ -82,7 +83,7 @@ class DatabaseBase:
         db.close()
         return True
 
-    def clear(self):
+    def clear(self) -> bool:
         """ clears all data in tables from db file. """
         tdb = self.createObj()
         try:

@@ -1,8 +1,10 @@
 from base64 import urlsafe_b64encode
+
 from cryptography.fernet import Fernet, InvalidToken
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
+from tinydb.table import Document
 
 from .data import DatabaseBase
 from .factory import Factory
@@ -14,7 +16,7 @@ class FernetFactory:
         super().__init__()
         self.key = self._mkKey(password, salt)
 
-    def _mkKey(self, password: str, salt: str):
+    def _mkKey(self, password: str, salt: str) -> str:
 
         if isinstance(password, str) is False:
             raise TypeError('the password needs to be a string')
@@ -35,7 +37,7 @@ class FernetFactory:
 
         return key
 
-    def encrypt(self, msg: str):
+    def encrypt(self, msg: str) -> str:
         fernet = Fernet(self.key)
 
         if isinstance(msg, str) is False:
@@ -44,7 +46,7 @@ class FernetFactory:
         msg = msg.encode()
         return fernet.encrypt(msg).decode()
 
-    def decrypt(self, token: str):
+    def decrypt(self, token: str) -> str:
         fernet = Fernet(self.key)
         token = token.encode()
         return fernet.decrypt(token).decode()
@@ -56,7 +58,7 @@ class DatabaseBaseSercure(DatabaseBase):
         super().__init__(file=file, table=table, requiredKeys=requiredKeys)
         self.salt = salt
 
-    def create(self, row: dict, pw: str):
+    def create(self, row: dict, pw: str) -> int:
         """ creates a row where the keys and values are encripted"""
 
         if isinstance(pw, str) is False:
@@ -88,7 +90,7 @@ class DatabaseBaseSercure(DatabaseBase):
 
         return newId
 
-    def createMultiple(self, rows: list, pw: str):
+    def createMultiple(self, rows: list, pw: str) -> list:
         """ adds multiple rows to the database where the keys and value"""
 
         if isinstance(rows, list) is False:
@@ -120,7 +122,7 @@ class DatabaseBaseSercure(DatabaseBase):
 
         return rowids
 
-    def readAll(self, pw: str):
+    def readAll(self, pw: str) -> list:
         """ returns all rows that are decriptable with the passed password """
         goodRows = []
         fernet = FernetFactory(pw, self.salt)
@@ -147,7 +149,7 @@ class DatabaseBaseSercure(DatabaseBase):
             goodRows.append(newrow)
         return goodRows
 
-    def readById(self, doc_id: int, pw: str):
+    def readById(self, doc_id: int, pw: str) -> Document:
         """ get the row to decript """
         row = super().readById(doc_id)
         if row is None:
