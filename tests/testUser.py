@@ -1,6 +1,7 @@
 from unittest import TestCase
 from random import choices, random
 from string import ascii_letters, punctuation, digits
+from time import time
 
 from tinydb_base.user import User
 
@@ -22,13 +23,16 @@ class TestUser(TestCase):
         """ test makeUser """
 
         usr = User(self.fileName)
-        newUser = usr.makeUser('testUser', 'password')
+        uname = f'testuser{time()}'
+        newUser = usr.makeUser(uname, 'password')
         self.assertIsInstance(newUser, int)
 
     def testTwo(self):
         """ test testUser """
         usr = User(self.fileName)
-        usr.makeUser('testUser', 'password')
+
+        uname = f'testuser{time()}'
+        usr.makeUser(uname, 'password')
 
         self.assertTrue(
             usr.testUser(1, 'password')

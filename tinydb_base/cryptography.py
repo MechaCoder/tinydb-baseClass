@@ -4,7 +4,7 @@ from cryptography.fernet import Fernet, InvalidToken
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
-from tinydb.table import Document
+from tinydb.database import Document
 
 from .data import DatabaseBase
 from .factory import Factory

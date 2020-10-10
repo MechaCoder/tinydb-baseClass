@@ -4,6 +4,7 @@ from os import urandom
 from tinydb import Query
 
 from .data import DatabaseBase
+from .exceptions import UsernameExists
 
 
 def mkpassword(passcode: str, salt: bytes) -> str:
@@ -25,6 +26,12 @@ class User(DatabaseBase):
 
     def makeUser(self, username: str, password: str) -> int:
         """ creates a user """
+
+        db = self.createObj()
+        if db.tbl.contains(Query().username == username):
+            db.close()
+            raise UsernameExists(f'the username {username} already exists')
+        db.close()  
 
         pw = mkpassword(password, urandom(32))
 

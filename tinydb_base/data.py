@@ -1,5 +1,5 @@
 from .factory import Factory
-from tinydb.table import Document
+from tinydb.database import Document
 
 
 class DatabaseBase:
