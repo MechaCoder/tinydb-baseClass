@@ -8,6 +8,7 @@ from tests.testCryptography import TestFernetFactory, TestDatabaseBaseSercure
 from tests.testGetSet import TestGetSet
 from tests.testGetSetSercure import TestGetSetSercure
 from tests.testExporter import TestExporter
+from tests.testUser import TestUser
 
 if __name__ == '__main__':
     main()

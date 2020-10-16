@@ -6,7 +6,7 @@ file.close()
 
 setup(
     name='tinydb-baseClass',
-    version='0.2.0',
+    version='0.3.0',
     description='a base class to tinydb',
     long_description=longDisc,
     long_description_content_type="text/markdown",

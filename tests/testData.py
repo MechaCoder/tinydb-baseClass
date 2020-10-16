@@ -1,5 +1,5 @@
 from unittest import TestCase
-from random import choice
+from random import choice, randint
 from os import remove
 
 from tinydb.database import Document
@@ -85,6 +85,16 @@ class TestData(TestCase):
 
         with self.assertRaises(KeyError):
             base.create({'something': 0})
+
+    def testSix(self):
+        """ tests purgeing of a table """
+        base = DatabaseBase(self.fileName, 'thing2')
+        for e in range(0, randint(25, 50)):
+            base.create({'title': 'foobar'})
+
+        self.assertFalse(len(base.readAll()) == 0)
+        base.clear()
+        self.assertTrue(len(base.readAll()) == 0)
 
     def tearDown(self):
         try:

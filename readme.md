@@ -57,6 +57,7 @@ This will enable to accesses the base class, you can add your own custom functio
 |readAll|| returns a list obj|
 |readById|id| this gets a row by the id |
 |removeById|id|this removes a row by id |
+|clear||this removes all data from the table|
 
 ### DatabaseBaseSercure
 
@@ -83,6 +84,32 @@ obj = Diary(salt='thisisasalt')
 |readAll|| returns a list obj|
 |readById|id| this gets a row by the id |
 |removeById|id|this removes a row by id |
+|clear||this removes all data from the table|
+
+### User
+Something that alot of systems need to is work with user componants, this is a
+simple class that enables Users to be created, it is a class that is inherted
+from `DatabaseBase`, but has speail methods that pertain to Users
+
+``` Python 3
+
+from tinydb_base import User
+usrTable = User() # will work with a user as a table,
+>>> usrTable.makeUser('me', 'mypassword')
+1
+>>> usrTable.authUser('me', '!mypassword')
+False
+>>> usrTable.authUser('me', 'mypassword')
+True
+
+```
+
+|Method Name| attr | Description |
+|---|---|---|
+|makeUser| username, password | creates a user in the system|
+|testUser| userId, password | tests a password angest a user id|
+|authUser| username, password| test a username and password|
+
 
 ### GetSet
 
