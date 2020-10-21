@@ -1,8 +1,9 @@
 from unittest import TestCase
 from random import randint
 from os import remove
+from time import sleep
 
-from tinydb_base.getSet import GetSet
+from tinydb_base.getSet import GetSet, futureTimeStamp
 from tinydb_base.exceptions import RowNotFound_Exception
 
 
@@ -53,6 +54,15 @@ class TestGetSet(TestCase):
             obj.get('testValue'),
             val2
         )
+
+    def test_timeout(self):
+        obj = GetSet(self.fileName)
+        obj.set('testTimeOut', randint(50000, 60000),
+                timeout=futureTimeStamp(second=1))
+
+        sleep(2)
+        with self.assertRaises(RowNotFound_Exception):
+            obj.get('testTimeOut')
 
     def tearDown(self):
         remove(self.fileName)

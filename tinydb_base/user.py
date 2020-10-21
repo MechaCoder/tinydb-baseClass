@@ -31,7 +31,7 @@ class User(DatabaseBase):
         if db.tbl.contains(Query().username == username):
             db.close()
             raise UsernameExists(f'the username {username} already exists')
-        db.close()  
+        db.close()
 
         pw = mkpassword(password, urandom(32))
 

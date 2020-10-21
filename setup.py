@@ -6,7 +6,7 @@ file.close()
 
 setup(
     name='tinydb-baseClass',
-    version='0.2.3',
+    version='0.3.1',
     description='a base class to tinydb',
     long_description=longDisc,
     long_description_content_type="text/markdown",
@@ -20,6 +20,7 @@ setup(
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9"
         "License :: OSI Approved :: MIT License",
     ]
 )
