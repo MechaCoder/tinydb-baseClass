@@ -2,10 +2,6 @@
 
 I use TinyDB ... a lot and very often and i seem to be writing the same functions over and over. The idea behind the small project to provide a way for devs to easily create a data modal around tinydb without the need to build a base class.
 
-## Important
-
-+ BREAKING CHANGE; there is a breaking in `tinydb_base.bata.DatabaseBase`, i have changed that way you define column heads in tables they are now a csl (comma separated list)
-
 ## How to install
 
 the easiest way is to install through your dependency manager `pip install tinyDbBase` or if using `pipenv install tinyDbBase`.
@@ -75,6 +71,7 @@ class Diary(DatabaseBaseSercure):
 
 
 obj = Diary(salt='thisisasalt')
+
 ```
 
 |Method Name| attr | Description |
@@ -110,7 +107,6 @@ True
 |testUser| userId, password | tests a password angest a user id|
 |authUser| username, password| test a username and password|
 
-
 ### GetSet
 
 this is a very simple interface that sets and gets values based on a tag. this can be used for things like settings. if the tag dose did not exist the class will raise `tinydb_base.exceptions.RowNotFound_Exception`
@@ -143,7 +139,24 @@ class Settings(GetSet):
             'foo': 'bar'
         })
 
-```
+ ```
+
+#### *NEW* Time Out Setting
+
+This new feature of get set allows a user to set values to timeout and be removed from the data base, this is manged though a argument that is passed though the set method.
+
+``` Python3
+from tinydb_base.getSet import GetSet, futureTimeStamp
+
+class Settings(GetSet):
+
+    def __init__(self, file: str = 'ds.json', table: str = __name__):
+        super().__init__()
+
+obj = Settings().set('api-key', 'thisisaapikey, futureTimeStamp(hour=1))
+ ```
+
+The above code will add a row to the databse that will that only be in the db for one hour.checking is done on a per meathod call basis.
 
 ### GetSetSercure
 
