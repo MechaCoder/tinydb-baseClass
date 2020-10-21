@@ -5,14 +5,15 @@ from tinydb import Query
 from .factory import Factory
 from .exceptions import RowNotFound_Exception
 
+
 def futureTimeStamp(
-        day:int = 0,
-        month:int = 0,
-        year:int = 0,
-        hour:int = 0,
-        minute:int = 0,
-        second:int = 0
-    ):
+    day: int = 0,
+    month: int = 0,
+    year: int = 0,
+    hour: int = 0,
+    minute: int = 0,
+    second: int = 0
+):
     nowTs = datetime.now()
     return datetime(
         day=nowTs.day + day,
@@ -23,6 +24,7 @@ def futureTimeStamp(
         second=nowTs.second + second,
         microsecond=nowTs.microsecond
     )
+
 
 class GetSet:
 
@@ -36,9 +38,9 @@ class GetSet:
     def _checkTimeout(self):
         factory = Factory(self.fileName, self.tableName)
         timeStamp = datetime.now().timestamp()
-        
+
         for row in factory.tbl.all():
-            
+
             if isinstance(row['timeout'], float):
 
                 if row['timeout'] <= timeStamp:
@@ -46,7 +48,6 @@ class GetSet:
 
         factory.close()
         return True
-
 
     def defaultRows(self, dRows: dict) -> None:
         """ runs on instance - adds any rows only if the tag dose not exist, takes a dict"""

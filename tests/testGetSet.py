@@ -57,13 +57,12 @@ class TestGetSet(TestCase):
 
     def test_timeout(self):
         obj = GetSet(self.fileName)
-        obj.set('testTimeOut', randint(50000, 60000), timeout=futureTimeStamp(second=1))
+        obj.set('testTimeOut', randint(50000, 60000),
+                timeout=futureTimeStamp(second=1))
 
         sleep(2)
         with self.assertRaises(RowNotFound_Exception):
             obj.get('testTimeOut')
-
-
 
     def tearDown(self):
         remove(self.fileName)
