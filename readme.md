@@ -54,6 +54,7 @@ This will enable to accesses the base class, you can add your own custom functio
 |readById|id| this gets a row by the id |
 |removeById|id|this removes a row by id |
 |clear||this removes all data from the table|
+|exists|tag, value|checks if a a value with header exists|
 
 ### DatabaseBaseSercure
 
@@ -82,8 +83,10 @@ obj = Diary(salt='thisisasalt')
 |readById|id| this gets a row by the id |
 |removeById|id|this removes a row by id |
 |clear||this removes all data from the table|
+|exists|tag, value|checks if a a value with header exists|
 
 ### User
+
 Something that alot of systems need to is work with user componants, this is a
 simple class that enables Users to be created, it is a class that is inherted
 from `DatabaseBase`, but has speail methods that pertain to Users
