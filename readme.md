@@ -55,6 +55,7 @@ This will enable to accesses the base class, you can add your own custom functio
 |removeById|id|this removes a row by id |
 |clear||this removes all data from the table|
 |exists|tag, value|checks if a a value with header exists|
+|now_ts||returns a unix time as a float|
 
 ### DatabaseBaseSercure
 
@@ -83,7 +84,6 @@ obj = Diary(salt='thisisasalt')
 |readById|id| this gets a row by the id |
 |removeById|id|this removes a row by id |
 |clear||this removes all data from the table|
-|exists|tag, value|checks if a a value with header exists|
 
 ### User
 

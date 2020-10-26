@@ -113,6 +113,14 @@ class TestData(TestCase):
             base.exists('title', title2)
         )
 
+    def testEight(self):
+        base = DatabaseBase(self.fileName, 'thing2')
+        self.assertIsInstance(
+            base.now_ts(),
+            float
+        )
+        
+
 
     def tearDown(self):
         try:
