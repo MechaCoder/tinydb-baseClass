@@ -1,5 +1,7 @@
+from datetime import datetime
 from .factory import Factory
 from tinydb.database import Document
+from tinydb import Query
 
 
 class DatabaseBase:
@@ -12,6 +14,7 @@ class DatabaseBase:
         self.requiredKeys = requiredKeys.split(',')
 
         self.createObj = lambda: Factory(self.fileName, self.table)
+        self.now_ts = lambda: datetime.now().timestamp()
 
     def create(self, row: dict) -> int:
         """ inserts a single row into the database """
@@ -92,3 +95,17 @@ class DatabaseBase:
             tdb.db.purge_table(self.table)  # python37, python38
         tdb.close()
         return True
+
+    def exists(self, tag:str, value:any) -> bool:
+        """ 
+        checks of a row exists by querying a tag by a value
+        """
+
+        if tag not in self.requiredKeys:
+            raise TypeError('tag is not in required keys')
+
+        db = self.createObj()
+        result = db.tbl.contains(Query()[tag] == value)
+        db.close()
+
+        return result

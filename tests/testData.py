@@ -96,6 +96,32 @@ class TestData(TestCase):
         base.clear()
         self.assertTrue(len(base.readAll()) == 0)
 
+    def testSeven(self):
+        """ tests exists in a table """
+
+        
+        base = DatabaseBase(self.fileName, 'thing2')
+        title = f'bob-{randint(5000, 6000)}'
+        base.create({'title': title})
+
+        self.assertTrue(
+            base.exists('title', title)
+        )
+
+        title2 = f'bob-{randint(6000, 7000)}'
+        self.assertFalse(
+            base.exists('title', title2)
+        )
+
+    def testEight(self):
+        base = DatabaseBase(self.fileName, 'thing2')
+        self.assertIsInstance(
+            base.now_ts(),
+            float
+        )
+        
+
+
     def tearDown(self):
         try:
             remove(self.fileName)
