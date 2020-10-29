@@ -11,7 +11,7 @@ twine = "*"
 tinydb = "*"
 autopep8 = "*"
 check-manifest = "*"
-cryptography = "*"
+cryptography = ">=3.2"
 tinydb-baseclass = {editable = true,path = "."}
 pyyaml = "*"
 deepcode = "*"
