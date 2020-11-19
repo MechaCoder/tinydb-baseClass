@@ -1,3 +1,4 @@
+from time import sleep
 from unittest import TestCase
 from random import choice, randint
 from os import remove
@@ -99,7 +100,6 @@ class TestData(TestCase):
     def testSeven(self):
         """ tests exists in a table """
 
-        
         base = DatabaseBase(self.fileName, 'thing2')
         title = f'bob-{randint(5000, 6000)}'
         base.create({'title': title})
@@ -114,13 +114,36 @@ class TestData(TestCase):
         )
 
     def testEight(self):
+        """ testing now_ts """
         base = DatabaseBase(self.fileName, 'thing2')
         self.assertIsInstance(
             base.now_ts(),
             float
         )
-        
 
+    def testNine(self):
+        """ testing update method """
+        base = DatabaseBase(self.fileName, 'updateTable')
+        updateDocId = base.create({'title': 'one'})
+
+        self.assertIsInstance(
+            updateDocId,
+            int
+        )
+
+        base.updateById(updateDocId, 'title', 'two')
+        sleep(1)
+        doc = base.readById(updateDocId)
+
+        self.assertIsInstance(
+            doc,
+            Document
+        )
+
+        self.assertEqual(
+            doc['title'],
+            'two'
+        )
 
     def tearDown(self):
         try:

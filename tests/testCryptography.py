@@ -1,5 +1,6 @@
 from unittest import TestCase
 from os import urandom
+from time import sleep
 
 from tinydb_base.cryptography import FernetFactory
 from tinydb_base.cryptography import DatabaseBaseSercure
@@ -102,3 +103,22 @@ class TestDatabaseBaseSercure(TestCase):
         self.assertIsInstance(row, dict)
         self.assertIn('title', row.keys())
         self.assertIn('doc_id', row.keys())
+
+    def testNine(self):
+        """ testing update method """
+        base = DatabaseBaseSercure('ds.test.json', 'updateTable')
+        updateDocId = base.create({'title': 'one'}, 'pw')
+
+        self.assertIsInstance(
+            updateDocId,
+            int
+        )
+
+        base.updateById('pw', updateDocId, 'title', 'two')
+        sleep(1)
+        doc = base.readById(updateDocId, 'pw')
+
+        self.assertEqual(
+            doc['title'],
+            'two'
+        )
