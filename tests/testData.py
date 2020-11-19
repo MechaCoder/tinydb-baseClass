@@ -1,4 +1,3 @@
-from datetime import time
 from time import sleep
 from unittest import TestCase
 from random import choice, randint
