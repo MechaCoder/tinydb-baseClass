@@ -76,6 +76,12 @@ class DatabaseBase:
         db.close()
         return row
 
+    def updateById(self, doc_id: int, tag: str, value: any) -> int:
+        db = self.createObj()
+        updatedIds = db.tbl.update({tag: value}, doc_ids=[doc_id])
+        db.close()
+        return updatedIds[0]
+
     def removeById(self, doc_id: int) -> bool:
         """ removes the row by the document_id """
 
@@ -96,7 +102,7 @@ class DatabaseBase:
         tdb.close()
         return True
 
-    def exists(self, tag:str, value:any) -> bool:
+    def exists(self, tag: str, value: any) -> bool:
         """ 
         checks of a row exists by querying a tag by a value
         """
