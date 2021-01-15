@@ -115,6 +115,7 @@ class TestData(TestCase):
 
     def testEight(self):
         """ testing now_ts """
+
         base = DatabaseBase(self.fileName, 'thing2')
         self.assertIsInstance(
             base.now_ts(),
@@ -144,6 +145,34 @@ class TestData(TestCase):
             doc['title'],
             'two'
         )
+
+    def testTen(self):
+        """ tests type checking for columns """
+        
+        base = DatabaseBase(self.fileName, 'typeChecking', "title:str,num:int,is:bool")
+        
+        with self.assertRaises(TypeError):
+            base.create({
+                'title': 92,
+                'num': 1,
+                'is': True
+            })
+
+        with self.assertRaises(TypeError):
+            base.create({
+                'title': '92',
+                'num': '1',
+                'is': True
+            })
+
+        rowid = base.create({
+            'title': 'checked final',
+            'num': 92,
+            'is': True
+        })
+
+        self.assertIsInstance(rowid, int)
+        
 
     def tearDown(self):
         try:

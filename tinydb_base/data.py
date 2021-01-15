@@ -6,15 +6,46 @@ from tinydb import Query
 
 class DatabaseBase:
 
-    def __init__(self, file: str = 'ds.json', table: str = __name__, requiredKeys='title'):
+    def __init__(self, file: str = 'ds.json', table: str = __name__, requiredKeys='title:str'):
         super().__init__()
 
         self.fileName = file
         self.table = table
-        self.requiredKeys = requiredKeys.split(',')
+
+        columnTypes = {}
+        for column in requiredKeys.split(','):
+            col = column.split(':')
+            if len(col) == 1:
+                col.append('str')
+            columnTypes[col[0]] = col[1]
+
+        self.requiredKeys = columnTypes
 
         self.createObj = lambda: Factory(self.fileName, self.table)
         self.now_ts = lambda: datetime.now().timestamp()
+
+    def _typeCheck(self, header:str, value:any) -> bool:
+        
+        if header not in self.requiredKeys.keys():
+            return False
+
+        testVal = None
+        if self.requiredKeys[header] == 'str':
+            testVal = str
+        elif self.requiredKeys[header] == 'int':
+            testVal = int
+        elif self.requiredKeys[header] == 'bool':
+            testVal = bool
+        elif self.requiredKeys[header] == 'float':
+            testVal = float
+        else:
+            raise TypeError('the excepted types are string, intger, float or boolen, ')
+
+        if isinstance(value, testVal):
+            return True
+        return False
+
+
 
     def create(self, row: dict) -> int:
         """ inserts a single row into the database """
@@ -26,9 +57,14 @@ class DatabaseBase:
             raise TypeError('the row must have key value pair.')
 
         for e in row.keys():
-            if e not in self.requiredKeys:
+            if e not in self.requiredKeys.keys():
                 raise KeyError(
-                    'a required key ({}) has not been found in the row'.format(e))
+                    'a required key ({}) has not been found in the row'.format(e)
+                )
+            
+            if self._typeCheck(e, row[e]) == False:
+                raise TypeError('the header is not the correct type.')
+
 
         db = self.createObj()
         rid = db.tbl.insert(row)
@@ -49,9 +85,14 @@ class DatabaseBase:
                 raise Warning('all rows must be a dict SKIPING')
 
             for key in row.keys():  # checking the required keys are present.
-                if key not in self.requiredKeys:
+                if key not in self.requiredKeys.keys():
                     raise Warning(
                         'all rows must be have all required keys ({}) SKIPING'.format(key))
+
+                if self._typeCheck(key, row[key]) == False:
+                    raise TypeError('the header is not the correct type.')
+
+            
             goodrows.append(row)
 
         db = self.createObj()
