@@ -2,6 +2,7 @@ from unittest import TestCase
 from random import choices, random
 from string import ascii_letters, punctuation, digits
 from time import time
+from os import remove
 
 from tinydb_base.user import User
 
@@ -15,6 +16,7 @@ class TestUser(TestCase):
     def tearDown(self):
         try:
             remove(self.fileName)
+            pass
         except:
             pass
         return super().tearDown()
