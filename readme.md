@@ -26,6 +26,8 @@ This allows you to interact with Tinydb and both the root object and a table in 
 
 ### DatabaseBase
 
+#### Breaking Change
+
 the idea is to import the base class and then derives into your own class. the idea is that you can simply create your data layer by creating a class that will work out what needs and just work.
 
 ``` python 3
@@ -34,7 +36,7 @@ the idea is to import the base class and then derives into your own class. the i
 
     class MyTable(DatabaseBase):
 
-        def __init__(self, file='ds.json', table=__name__, requiredKeys='title,myContent'):
+        def __init__(self, file='ds.json', table=__name__, requiredKeys='title:str,myContent:str'):
             super().__init__(file=file, table=table, requiredKeys=requiredKeys)
 
 
@@ -42,7 +44,7 @@ the idea is to import the base class and then derives into your own class. the i
 
 ```
 
-This will enable to accesses the base class, you can add your own custom functions. the will use the namespaces of the file within the project, but you can override this easily at an instance. another cool feature is that required keys this is key that must be present in every row which can also be changed.
+This will enable to accesses the base class, you can add your own custom functions. the will use the namespaces of the file within the project, but you can override this easily at an instance. another cool feature is that required keys this is key that must be present in every row which can also be changed. **you can now define the basic data type used for data in a table in the `requiredKeys` you can now define types, it will not atempt to convert the value, but it will ensure that the data is a concestant type.**
 
 #### methods
 

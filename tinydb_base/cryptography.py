@@ -165,3 +165,13 @@ class DatabaseBaseSercure(DatabaseBase):
             newRow[newKey] = newValue
 
         return newRow
+
+    def updateById(self, pw: str, doc_id: int, tag: str, value: str) -> int:
+
+        doc = self.readById(doc_id=doc_id, pw=pw)
+
+        fernet = FernetFactory(pw, self.salt)
+        cTag = fernet.encrypt(tag)
+        cVal = fernet.encrypt(value)
+        ids = super().updateById(doc_id=doc_id, tag=cTag, value=cVal)
+        return ids
