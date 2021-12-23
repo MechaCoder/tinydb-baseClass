@@ -3,13 +3,17 @@ from .factory import Factory
 from tinydb.database import Document
 from tinydb import Query
 
+from os.path import join, abspath, dirname
+
+def mkPath(file:str = 'Pipfile'):
+    return join(abspath(dirname('.')), file)
 
 class DatabaseBase:
 
     def __init__(self, file: str = 'ds.json', table: str = __name__, requiredKeys='title:str'):
         super().__init__()
 
-        self.fileName = file
+        self.fileName = mkPath(file=file)
         self.table = table
 
         columnTypes = {}
