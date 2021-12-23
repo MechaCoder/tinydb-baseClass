@@ -4,6 +4,7 @@ from tinydb import Query
 
 from .factory import Factory
 from .exceptions import RowNotFound_Exception
+from .data import mkPath
 
 
 def futureTimeStamp(
@@ -31,7 +32,7 @@ class GetSet:
     def __init__(self, file: str = 'ds.json', table: str = __name__):
         super().__init__()
 
-        self.fileName = file
+        self.fileName = mkPath(file)
         self.tableName = table
         self.defaultRows({})
 

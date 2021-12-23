@@ -1,6 +1,7 @@
 from .factory import Factory
 from .cryptography import FernetFactory
 from .exceptions import RowNotFound_Exception
+from .data import mkPath
 
 
 class GetSetSercure:
@@ -8,7 +9,7 @@ class GetSetSercure:
     def __init__(self, salt: str, pw: str, file: str = 'ds.json', table: str = __name__):
         super().__init__()
 
-        self.fileName = file
+        self.fileName = mkPath(file)
         self.tableName = table
         self.salt = salt
         self.pw = pw
